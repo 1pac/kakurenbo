@@ -52,7 +52,13 @@ module Kakurenbo
           scope :with_deleted,    ->{ all.tap{ |s| s.default_scoped = false } }
           scope :without_deleted, ->{ where(kakurenbo_column => nil) }
 
-          default_scope ->{ without_deleted }
+          # NOTE: デフォルトスコープを論理削除除外にするとbelongs_toやhas_manyに
+          # 論理削除したレコードを含めるようにするにはbelongs_toやhas_manyの
+          # 代わりに自前でメソッドを定義して回る必要がある。
+          # 今回の利用シーンではほとんどの箇所では論理削除されたレコードを
+          # 見せたいので、デフォルトスコープは倫理削除されたレコードを含めるようにする
+          # default_scope ->{ without_deleted }
+          default_scope ->{ with_deleted }
         }
       end
     end
