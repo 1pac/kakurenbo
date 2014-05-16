@@ -59,10 +59,9 @@ module Kakurenbo
           # NOTE: デフォルトスコープを論理削除除外にするとbelongs_toやhas_manyに
           # 論理削除したレコードを含めるようにするにはbelongs_toやhas_manyの
           # 代わりに自前でメソッドを定義して回る必要がある。
-          # 今回の利用シーンではほとんどの箇所では論理削除されたレコードを
-          # 見せたいので、デフォルトスコープは倫理削除されたレコードを含めるようにする
+          # デフォルトスコープをwithout_deletedにしたいかwith_deletedにしたいかは
+          # 利用するクラスによって異なるのでここでは何もしない。
           # default_scope ->{ without_deleted }
-          default_scope ->{ with_deleted }
         }
       end
     end
